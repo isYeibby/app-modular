@@ -1,0 +1,71 @@
+:root{
+  --header-bg: #20232a;
+  --text-color: #ffffff;
+  --muted: #9aa4b2;
+}
+
+.app-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 16px;
+  background: var(--header-bg);
+  color: var(--text-color);
+  height: 80px;
+}
+
+.header-left,
+.header-center,
+.header-right{
+  display: flex;
+  align-items: center;
+}
+
+.header-left{
+  flex: 0 0 auto; /* ocupa solo lo que necesite */
+}
+
+.header-logo{
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  display: block;
+}
+
+.header-center{
+  flex: 1 1 auto; /* toma el espacio central */
+  justify-content: center; /* centra el título horizontalmente */
+}
+
+.header-right{
+  flex: 0 0 auto; /* contenido alineado a la derecha */
+  gap: 12px;
+}
+
+.header-nav{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.header-nav a{
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.header-nav a:hover{
+  background: rgba(255,255,255,0.04);
+}
+
+.theme-switcher {
+  margin-left: 12px;
+  display: flex;
+  align-items: center;    
+  border-radius: 80px;
+}
+

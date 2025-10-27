@@ -1,0 +1,223 @@
+.todo-list-container {
+  /* Contenedor principal: márgenes, padding y ancho máximo */
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 600px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  /* Variables de tema (por defecto: modo claro) */
+  --bg: #f9f9f9; /* fondo del contenedor */
+  --text: #333; /* color principal del texto */
+  --muted: #999; /* color para textos menos importantes */
+  --item-bg: #ffffff; /* fondo de cada tarea (claro) */
+  --item-text: #333; /* texto de las tareas en claro */
+  --item-hover-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --primary: #007bff; /* color de acciones (botón agregar) */
+  --primary-dark: #0056b3; /* hover color para el botón primario */
+  --success: #28a745; /* color completar */
+  --success-dark: #218838; /* hover color completar */
+  --danger: #dc3545; /* color eliminar */
+  --danger-dark: #c82333; /* hover color eliminar */
+  --completed-bg: #e8f5e9; /* fondo para tareas completadas (claro) */
+  --completed-text: rgba(0,0,0,0.6);
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  background-color: var(--bg);
+  box-shadow: var(--box-shadow);
+}
+
+.todo-list-container h2 {
+  /* Título principal */
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 20px;
+  font-size: 24px;
+  transition: color 0.3s ease;
+}
+
+/* Modo oscuro: sobrescribe variables para el contenedor y componentes */
+.todo-list-container.dark {
+  --bg: #20232a;
+  --text: #e0e0e0;
+  --muted: #777;
+  --item-bg: #2d2d2d;
+  --item-text: #e0e0e0;
+  --item-hover-shadow: 0 2px 8px rgba(255, 255, 255, 0.08);
+  --box-shadow: 0 2px 4px rgba(255, 255, 255, 0.06);
+  --success: #4caf50;
+  --success-dark: #4aaf4a;
+  --danger-dark: #b71c1c;
+  --primary-dark: #0056b3;
+  --completed-bg: #282c34;
+  --completed-text: #cfcfcf;
+  background-color: var(--bg);
+  box-shadow: var(--box-shadow);
+}
+
+/* Nota: el color del h2 viene de la variable --text */
+
+/* Estilos para el formulario */
+.task-form {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.task-form input {
+  /* Campo de entrada: adaptable a temas mediante variables */
+  flex-grow: 1;
+  padding: 12px;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+  background-color: var(--item-bg);
+  color: var(--item-text);
+}
+
+.task-form input::placeholder {
+  color: rgba(0,0,0,0.4);
+}
+
+/* Ajustes para modo oscuro se aplican vía variables en .dark */
+.todo-list-container.dark .task-form input::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+
+.task-form button {
+  /* Botón de agregar: usa color primario */
+  padding: 12px 20px;
+  border: none;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.task-form button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Estilos para la lista de tareas */
+
+.todo-list-container ul {
+  /* Lista sin estilos de marcador */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-list-container li {
+  /* Elemento de tarea: fondo, espaciado y alineación */
+  padding: 15px;
+  background-color: var(--item-bg);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.todo-list-container li:hover {
+  box-shadow: var(--item-hover-shadow);
+  transform: translateY(-2px);
+}
+
+
+.todo-list-container li.completed {
+  /* Estilos para tarea completada (usa variables para temas) */
+  background-color: var(--completed-bg);
+  border-left: 4px solid var(--success);
+}
+
+.todo-list-container li.completed .task-text {
+  text-decoration: line-through;
+  color: var(--completed-text);
+  opacity: 0.9;
+}
+
+
+/* En modo oscuro las variables ya están sobreescritas en .dark,
+   así que los estilos anteriores se aplican automáticamente. */
+
+/* Estilos para el texto de la tarea */
+.task-text {
+  /* Texto de la tarea: flexible y con transición */
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--item-text);
+  margin-right: 15px;
+  transition: color 0.3s ease, opacity 0.2s ease;
+}
+
+/* Contenedor de botones */
+.task-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+/* Estilos base para los botones */
+
+.complete-btn,
+.delete-btn {
+  /* Botones de acción: estilo base */
+  padding: 10px 14px;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* Botón completar (verde) */
+.complete-btn {
+  /* Botón completar (verde) */
+  background-color: var(--success);
+}
+
+.complete-btn:hover {
+  background-color: var(--success-dark);
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+/* Botón eliminar (rojo) */
+.delete-btn {
+  /* Botón eliminar (rojo) */
+  background-color: var(--danger);
+}
+
+.delete-btn:hover {
+  background-color: var(--danger-dark);
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.delete-btn:active {
+  transform: scale(1.02);
+}
+
+/* Mensaje cuando no hay tareas */
+.todo-list-container ul:empty::after {
+  /* Mensaje cuando no hay tareas */
+  content: "No hay tareas pendientes. ¡Agrega una nueva!";
+  display: block;
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted);
+  font-style: italic;
+}
