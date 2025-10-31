@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './TaskHistory.css';
 import { db } from '../../firebaseConfig';
-import { collection, query, orderBy, onSnapshot, limit } from "firebase/firestore";
+import { collection, query, orderBy, onSnapshot, limit, addDoc, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
 import ThemeContext from '../../context/ThemeContext';
+import { Check, Trash2, Undo2 } from 'lucide-react'
 
 const TaskHistory = () => {
   const { theme } = useContext(ThemeContext);
@@ -75,6 +76,35 @@ const TaskHistory = () => {
     });
   };
 
+  // Función para restaurar una tarea desde el historial
+  const handleRestoreTask = async (historyItem) => {
+    try {
+      // Crear la tarea nuevamente en la colección de tareas
+      await addDoc(collection(db, 'tasks'), {
+        text: historyItem.taskText,
+        isComplete: historyItem.type === 'completed' ? true : false,
+        createdAt: serverTimestamp()
+      });
+
+      // Eliminar del historial
+      await deleteDoc(doc(db, 'taskHistory', historyItem.id));
+      
+      console.log('Tarea restaurada correctamente');
+    } catch (error) {
+      console.error('Error restaurando tarea:', error);
+    }
+  };
+
+  // Función para eliminar definitivamente del historial
+  const handlePermanentDelete = async (historyItemId) => {
+    try {
+      await deleteDoc(doc(db, 'taskHistory', historyItemId));
+      console.log('Tarea eliminada definitivamente del historial');
+    } catch (error) {
+      console.error('Error eliminando del historial:', error);
+    }
+  };
+
   return (
     <div className={`task-history-container ${theme}`}>
       <h3>Historial de Tareas</h3>
@@ -112,7 +142,7 @@ const TaskHistory = () => {
               className={`history-item ${item.type}`}
             >
               <div className="history-icon">
-                {item.type === 'completed' ? '' : ''}
+                {item.type === 'completed' ? <Check /> : <Trash2 />}
               </div>
               <div className="history-content">
                 <p className="history-task-text">{item.taskText}</p>
@@ -125,6 +155,22 @@ const TaskHistory = () => {
                 {item.type === 'deleted' && item.wasCompleted && (
                   <span className="history-badge">Estaba completada</span>
                 )}
+              </div>
+              <div className="history-actions">
+                <button 
+                  className="restore-btn"
+                  onClick={() => handleRestoreTask(item)}
+                  title="Restaurar tarea"
+                >
+                  <Undo2 />
+                </button>
+                <button 
+                  className="delete-btn"
+                  onClick={() => handlePermanentDelete(item.id)}
+                  title="Eliminar definitivamente"
+                >
+                  <Trash2 />
+                </button>
               </div>
             </div>
           ))

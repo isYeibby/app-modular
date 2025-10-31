@@ -127,11 +127,16 @@
   border-left: 4px solid var(--border);
   transition: all 0.2s ease;
   box-shadow: var(--item-shadow);
+  position: relative;
 }
 
 .history-item:hover {
   transform: translateX(4px);
   box-shadow: var(--item-hover-shadow);
+}
+
+.history-item:hover .history-actions {
+  opacity: 1;
 }
 
 .history-item.completed {
@@ -185,4 +190,66 @@
   font-style: italic;
   padding: 40px 20px;
   font-size: 14px;
+}
+
+/* Botones de acción en el historial */
+.history-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.history-actions button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  background-color: transparent;
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history-actions button:hover {
+  transform: scale(1.1);
+}
+
+.history-actions .restore-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.history-actions .restore-btn:hover {
+  background-color: #45a049;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.history-actions .delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.history-actions .delete-btn:hover {
+  background-color: #da190b;
+  box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+}
+
+/* Para dispositivos móviles, los botones siempre visibles */
+@media (max-width: 768px) {
+  .history-actions {
+    opacity: 1;
+  }
+  
+  .history-actions button {
+    font-size: 14px;
+    min-width: 32px;
+    height: 32px;
+    padding: 4px 8px;
+  }
 }
