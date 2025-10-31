@@ -176,7 +176,7 @@ const TaskHistory = () => {
           ))
         )}
       </div>
-    </div>
+    </div> 
   );
 };
 
